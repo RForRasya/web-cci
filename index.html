@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMK AL-ASIYAH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .neumorphic {
+            box-shadow: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .neumorphic:hover {
+            box-shadow: 2px 2px 5px #d1d9e6, -2px -2px 5px #ffffff;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        #mobile-menu.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-20px); }
+            100% { transform: translatey(0px); }
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+
+        .dark-mode .neumorphic {
+            box-shadow: 5px 5px 10px #0f1319, -5px -5px 10px #252b3f;
+        }
+
+        .dark-mode .glass {
+            background: rgba(26, 32, 44, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 transition-colors duration-300">
+    <nav class="neumorphic fixed w-full z-10 top-0 bg-white bg-opacity-90 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-12 w-12 rounded-full" src="alas.png" alt="Logo Sekolah">
+                    </a>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#home" class="nav-link text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
+                            <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Profil</a>
+                            <a href="#academic" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Akademik</a>
+                            <a href="#facilities" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fasilitas</a>
+                            <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <a href="#" class="neumorphic inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <i class="fas fa-user-graduate mr-2"></i>
+                        <span>Portal Siswa</span>
+                    </a>
+                    <button id="dark-mode-toggle" class="ml-4 neumorphic p-2 rounded-full">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Buka menu utama</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="nav-link text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
+                <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Profil</a>
+                <a href="#academic" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Akademik</a>
+                <a href="#facilities" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Fasilitas</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <a href="#" class="neumorphic flex items-center px-5 py-3 rounded-md text-base font-medium text-blue-600 hover:text-blue-700">
+                    <i class="fas fa-user-graduate mr-3"></i>
+                    Portal Siswa
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+        <section id="home" class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold mb-4 animate-float">Selamat Datang di SMK AL-ASIYAH</h1>
+                <p class="text-xl mb-8">Unggul, Profesional, Terdepan, Berkarakter</p>
+                <a href="#about" class="neumorphic bg-white text-blue-600 px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-100 transition duration-300">Pelajari Lebih Lanjut</a>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Tentang Kami</h2>
+                <div class="flex flex-wrap -mx-4">
+                    <div class="w-full md:w-1/2 px-4 mb-8">
+                        <div class="neumorphic p-6 rounded-lg h-full">
+                            <h3 class="text-xl font-semibold mb-4">Visi</h3>
+                            <p>Sebagai Sekolah Kejuruan Terdepan Dalam Penyiapan Sumberdaya Manusia Yang Menguasai Teknologi Informatika Serta Berakhlak Mulia Dengan Mengintegarsikan Sains, Teknologi, dan Nilai Ke Islaman.</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 px-4 mb-8">
+                        <div class="neumorphic p-6 rounded-lg h-full">
+                            <h3 class="text-xl font-semibold mb-4">Misi</h3>
+                            <ul class="list-disc list-inside">
+                                <li>Menyelenggarakan Pengajaran Dan Pendidikan Teknologi Informatika, Baik Yang Bersifat Teoritis Maupun Praktisi</li>
+                                <li>Melakukan Penelitian Guna Memperkaya Wawasan Dan Pengetahuan Siswa Di Bidang Teknologi Informatika</li>
+                                <li>Melakukan Kerjasama Yang Produktif Dengan Lembaga Dan Perusahaan Terkait</li>
+                                <li>Memberikan Landasn Moral Terhadap Pengembangan Dan Penggunaan Ilmu Pengetahuan Dan Teknologi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="academic" class="py-16 bg-white dark:bg-gray-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Program Akademik</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="neumorphic p-6 rounded-lg">
+                        <i class="fas fa-graduation-cap text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Program Reguler</h3>
+                        <p>Kurikulum standar nasional dengan pengayaan materi dan metode pembelajaran inovatif.</p>
+                    </div>
+                    <div class="neumorphic p-6 rounded-lg">
+                        <i class="fas fa-globe text-4xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Program Internasional</h3>
+                        <p>Kurikulum internasional yang mempersiapkan siswa untuk pendidikan tinggi global.</p>
+                    </div>
+                    <div class="neumorphic p-6 rounded-lg">
+                        <i class="fas fa-laptop-code text-4xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Program Teknologi</h3>
+                        <p>Fokus pada pengembangan keterampilan teknologi dan inovasi digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="facilities" class="py-16 bg-gray-100 dark:bg-gray-800">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Fasilitas Kami</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="glass p-6 rounded-lg">
+                        <img src="studio.png" alt="Perpustakaan" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Ekstrakulikuler Yang Nyaman dan Menarik</h3>
+                        <p>Dibantu dengan guru-guru yang menaungi atau melatih kemampuan skill siswa dan mengembangkannya.</p>
+                    </div>
+                    <div class="glass p-6 rounded-lg">
+                        <img src="RPL.png" alt="Laboratorium" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Prakerin</h3>
+                        <p>Difasilitasi dengan tempat Prakerin yang nyaman dan atu keahlian, juga mendapat fasilitas antar jemput dan mendapatkan asuransi Prakerin.</p>
+                    </div>
+                    <div class="glass p-6 rounded-lg">
+                        <img src="acara.png" alt="Lapangan Olahraga" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Banyak Acara Yang Seru</h3>
+                        <p>Acara-acara ini di fasilitasi ole sekolah dibantu dengan anggota OSIS yang menyukseskan acara tersebut.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-16 bg-white dark:bg-gray-900">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Hubungi Kami</h2>
+                <div class="max-w-lg mx-auto">
+                    <form class="neumorphic p-6 rounded-lg">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pesan</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-between">
+                <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                    <h3 class="text-xl font-semibold mb-4">Smk Al-Asiyah</h3>
+                    <p>Pabuaran, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16916</p>
+                    <p>Telp: +62 87904438</p>
+                    <p>Email: samsul_smktialasiyah@yahoo.com</p>
+                </div>
+                <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                    <h3 class="text-xl font-semibold mb-4">Tautan Cepat</h3>
+                    <ul>
+                        <li><a href="#home" class="hover:text-blue-400">Beranda</a></li>
+                        <li><a href="#about" class="hover:text-blue-400">Tentang Kami</a></li>
+                        <li><a href="#academic" class="hover:text-blue-400">Program Akademik</a></li>
+                        <li><a href="#facilities" class="hover:text-blue-400">Fasilitas</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <h3 class="text-xl font-semibold mb-4">Ikuti Kami</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p>&copy; 2024 smk al-asiyah.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Fungsi untuk toggle menu mobile
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('show');
+    });
+
+    // Menutup menu mobile ketika link di klik
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('show');
+        });
+    });
+
+    // Menutup menu mobile ketika klik di luar menu
+    document.addEventListener('click', (event) => {
+        const isClickInsideMenu = mobileMenu.contains(event.target);
+        const isClickOnMenuButton = mobileMenuButton.contains(event.target);
+        if (!isClickInsideMenu && !isClickOnMenuButton && mobileMenu.classList.contains('show')) {
+            mobileMenu.classList.remove('show');
+        }
+    });
+
+    // Smooth scroll untuk navigasi
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Animasi scroll dengan GSAP
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('.neumorphic, .glass').forEach(element => {
+        gsap.from(element, {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            scrollTrigger: {
+                trigger: element,
+                start: "top bottom-=100",
+                end: "bottom top",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+        updateDarkModeIcon();
+    });
+
+    // Check for saved dark mode preference
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        body.classList.add('dark-mode');
+        updateDarkModeIcon();
+    }
+
+    function updateDarkModeIcon() {
+        const icon = darkModeToggle.querySelector('i');
+        if (body.classList.contains('dark-mode')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    }
+
+    // Form submission
+    const contactForm = document.querySelector('#contact form');
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would typically send the form data to a server
+        alert('Terima kasih! Pesan Anda telah terkirim.');
+        contactForm.reset();
+    });
+    </script>
+</body>
+</html>
