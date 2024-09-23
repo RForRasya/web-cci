@@ -1,129 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMK AL-ASIYAH</title>
-    <link rel="icon" type="image/png" href="alas.png" sizes="32x32">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <title>SMK AL-ASIYAH - 3D Webpage</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #333;
+            --bg-color: #f0f0f0;
+        }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
         }
 
-        .neumorphic {
-            box-shadow: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
-            transition: all 0.3s ease;
+        .scene {
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
         }
 
-        .neumorphic:hover {
-            box-shadow: 2px 2px 5px #d1d9e6, -2px -2px 5px #ffffff;
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
         }
 
-        .glass {
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.18);
+        .cube__face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
         }
 
-        #mobile-menu {
-            transition: all 0.3s ease-in-out;
-            transform: translateY(-100%);
-            opacity: 0;
+        .cube__face h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
         }
 
-        #mobile-menu.show {
-            transform: translateY(0);
-            opacity: 1;
+        .cube__face p {
+            font-size: 16px;
+            color: var(--secondary-color);
         }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .cube__face--front  { transform: rotateY(  0deg) translateZ(150px); }
+        .cube__face--right  { transform: rotateY( 90deg) translateZ(150px); }
+        .cube__face--back   { transform: rotateY(180deg) translateZ(150px); }
+        .cube__face--left   { transform: rotateY(-90deg) translateZ(150px); }
+        .cube__face--top    { transform: rotateX( 90deg) translateZ(150px); }
+        .cube__face--bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
         }
 
-        @keyframes float {
-            0% { transform: translatey(0px); }
-            50% { transform: translatey(-20px); }
-            100% { transform: translatey(0px); }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            opacity: 0.3;
         }
 
-        .dark-mode {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
-
-        .dark-mode .neumorphic {
-            box-shadow: 5px 5px 10px #0f1319, -5px -5px 10px #252b3f;
-        }
-
-        .dark-mode .glass {
-            background: rgba(26, 32, 44, 0.25);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
     </style>
 </head>
-<body class="bg-gray-100 transition-colors duration-300">
-    <nav class="neumorphic fixed w-full z-10 top-0 bg-white bg-opacity-90 dark:bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0">
-                        <img class="h-12 w-12 rounded-full" src="alas.png" alt="Logo Sekolah">
-                    </a>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#home" class="nav-link text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
-                            <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Profil</a>
-                            <a href="#academic" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Akademik</a>
-                            <a href="#facilities" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Fasilitas</a>
-                            <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Kontak</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <a href="#" class="neumorphic inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                        <i class="fas fa-user-graduate mr-2"></i>
-                        <span>Portal Siswa</span>
-                    </a>
-                    <button id="dark-mode-toggle" class="ml-4 neumorphic p-2 rounded-full">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-blue-600 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                        <span class="sr-only">Buka menu utama</span>
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
+<body>
+    <div class="background"></div>
+    <div class="particles" id="particles-js"></div>
+    <div class="scene">
+        <div class="cube">
+            <div class="cube__face cube__face--front">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
+            </div>
+            <div class="cube__face cube__face--back">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
+            </div>
+            <div class="cube__face cube__face--right">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
+            </div>
+            <div class="cube__face cube__face--left">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
+            </div>
+            <div class="cube__face cube__face--top">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
+            </div>
+            <div class="cube__face cube__face--bottom">
+                <h1>SMK AL-ASIYAH</h1>
+                <p>Unggul Profesional Terdepan Berkarakter</p>
             </div>
         </div>
-        
-        <div id="mobile-menu" class="md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="nav-link text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-                <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Profil</a>
-                <a href="#academic" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Akademik</a>
-                <a href="#facilities" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Fasilitas</a>
-                <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">Kontak</a>
-            </div>
-            <div class="pt-4 pb-3 border-t border-gray-700">
-                <a href="#" class="neumorphic flex items-center px-5 py-3 rounded-md text-base font-medium text-blue-600 hover:text-blue-700">
-                    <i class="fas fa-user-graduate mr-3"></i>
-                    Portal Siswa
-                </a>
-            </div>
-        </div>
-    </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" }, polygon: { nb_sides: 5 }, },
+                opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } },
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+                modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } },
+            },
+            retina_detect: true,
+        });
+    </script>
+</body>
+</html>
 
     
 
